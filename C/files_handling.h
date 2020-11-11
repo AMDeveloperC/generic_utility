@@ -135,7 +135,7 @@ void print_array(char ** arr, int size) {
 /**
  * Compute the factorial of an integer given
  **/
-int fattoriale(int i) {
+int factorial(int i) {
     if (i == 0 || i == 1)
         return 1;
     else
