@@ -40,22 +40,23 @@ void write_by_character(char * file) {
  * Read row by row from the specified file
  * Useful function for application where one by one row processing is required
  **/
-void read_rows(char * file) {
+int process_rows(char * file, void (* process)(char * a)) {
     FILE * fp;
-    char * buff = (char *) xmalloc(40*sizeof(char));
+    char * buff = (char *) xmalloc(MAXLINE*sizeof(char));
+    int i = 0;
 
     if((fp = fopen(file, "r")) == NULL) {
-        fprintf(stderr,"impossible to open \t%s\n", file);
+        fprintf(stderr,"read_rows - impossible to open \t%s\n", file);
         exit(-1);
     }
-    int i = 0;
     while(fgets(buff, MAXLINE, fp) != NULL) {
         printf("Row %d: ", i);
-        printf("%s\n", buff);
+        printf("Processing %s\n", buff);
+        process(buff);
         i++;
     }
 
-    return;
+    return i;
 }
 
 /**
@@ -139,5 +140,5 @@ int factorial(int i) {
     if (i == 0 || i == 1)
         return 1;
     else
-        return fattoriale(i - 1) * i;
+        return factorial(i - 1) * i;
 }
